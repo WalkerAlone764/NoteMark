@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
-    <style name="Theme.NoteMark" parent="android:Theme.Material.Light.NoActionBar.Fullscreen" >
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="android:windowSplashScreenBackground" tools:ignore="NewApi">#5977F7</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/n</item>
         <item name="postSplashScreenTheme">@android:style/Theme.Material.NoActionBar</item>
