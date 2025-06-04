@@ -1,3 +1,5 @@
+import androidx.room.gradle.RoomSimpleCopyTask
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -70,7 +72,7 @@ dependencies {
     // Database - Room
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
-//    ksp(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     // DI - Koin
 //    implementation(libs.bundles.koin)
