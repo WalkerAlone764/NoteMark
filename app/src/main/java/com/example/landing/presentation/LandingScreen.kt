@@ -7,7 +7,7 @@ import com.example.core.presentation.util.getDeviceType
 import com.example.landing.presentation.component.LandingScreenLandscape
 import com.example.landing.presentation.component.LandingScreenMobilePortrait
 import com.example.landing.presentation.component.LandscapeScreenTabletPortrait
-import com.example.core.designsystem.theme.NoteMarkTheme
+import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 
 @Composable
 fun LandingScreenRoot() {

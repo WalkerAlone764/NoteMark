@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Devices.TABLET
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.notemark.R
-import com.example.core.designsystem.theme.NoteMarkTheme
+import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 
 @Composable
 fun LandscapeScreenTabletPortrait() {

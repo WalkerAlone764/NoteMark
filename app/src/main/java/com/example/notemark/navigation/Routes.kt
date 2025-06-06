@@ -7,4 +7,7 @@ sealed interface Routes {
 
     @Serializable
     data object LandingScreen: Routes
+
+    @Serializable
+    data object RegistrationScreen: Routes
 }

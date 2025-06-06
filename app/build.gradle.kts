@@ -1,4 +1,5 @@
 import androidx.room.gradle.RoomSimpleCopyTask
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -23,7 +24,17 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
     buildTypes {
+
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+        debug {
+            buildConfigField("String","EMAIL","${properties.getProperty("EMAIL")}")
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -40,6 +51,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -98,4 +110,12 @@ dependencies {
 
     //window-size-class
     implementation("androidx.compose.material3:material3-window-size-class:1.3.2")
+
+    //ktor
+    implementation(libs.bundles.ktor)
+
+    //koin
+    implementation(libs.bundles.koin)
+
+    implementation("androidx.compose.material:material-icons-extended-android:1.7.8")
 }

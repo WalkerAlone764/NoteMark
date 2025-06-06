@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import com.example.notemark.R
-import com.example.core.designsystem.theme.NoteMarkTheme
+import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 
 @Composable
 fun LandingScreenLandscape(

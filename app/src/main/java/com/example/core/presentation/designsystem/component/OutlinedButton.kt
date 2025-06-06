@@ -1,5 +1,6 @@
-package com.example.core.designsystem.component
+package com.example.core.presentation.designsystem.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -9,26 +10,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.designsystem.theme.NoteMarkTheme
+import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 
 @Composable
-fun FilledButton(
+fun OutlinedButton(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
         shape = RoundedCornerShape(16),
-        modifier = modifier,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(0.2f),
-            disabledContentColor = MaterialTheme.colorScheme.onSurface.copy(0.75f)
+        colors = ButtonDefaults.outlinedButtonColors(
+
         ),
-        enabled = enabled
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.primary
+        ),
+        modifier = modifier
     ) {
         Text(
             text = text,
@@ -38,10 +40,10 @@ fun FilledButton(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-private fun FilledButtonPreview() {
+private fun OutlinedButtonPreview() {
     NoteMarkTheme {
-        FilledButton(text = "Button", onClick = {}, enabled = false)
+        OutlinedButton(text = "Button", onClick = {})
     }
 }

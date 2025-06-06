@@ -1,10 +1,10 @@
 package com.example.notemark.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.auth.presentation.registration.RegistrationScreenRoot
 import com.example.landing.presentation.LandingScreenRoot
 
 @Composable
@@ -13,10 +13,14 @@ fun SetupNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.LandingScreen
+        startDestination = Routes.RegistrationScreen
     ) {
         composable<Routes.LandingScreen> {
             LandingScreenRoot()
+        }
+
+        composable<Routes.RegistrationScreen> {
+            RegistrationScreenRoot()
         }
 
     }
