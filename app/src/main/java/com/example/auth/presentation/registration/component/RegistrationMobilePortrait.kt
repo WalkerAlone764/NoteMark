@@ -43,8 +43,7 @@ fun RegistrationMobilePortrait(
                     .padding(
                         horizontal = 20.dp
                     )
-                    .verticalScroll(rememberScrollState())
-                    .imePadding()
+
 
                     .padding(innerPadding)
 
@@ -59,6 +58,8 @@ fun RegistrationMobilePortrait(
                     onAction = onAction,
                     modifier = Modifier
                         .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .imePadding()
                 )
             }
         }

@@ -9,4 +9,9 @@
     <string name="error_serialization">Oops, couldn\'t parse data.</string>
     <string name="error_unknown">An unknown error occurred.</string>
     <string name="error_unauthorized">A user is not authorized</string>
+
+
+    <!-- Login Screen -->
+    <string name="login_title">Log In</string>
+    <string name="login_description">Capture your thoughts and ideas.</string>
 </resources>

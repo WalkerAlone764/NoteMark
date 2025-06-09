@@ -118,4 +118,7 @@ dependencies {
     implementation(libs.bundles.koin)
 
     implementation("androidx.compose.material:material-icons-extended-android:1.7.8")
+
+    //secure
+    implementation(libs.androidx.security.crypto.ktx)
 }

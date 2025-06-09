@@ -1,4 +1,4 @@
-package com.example.core.networking
+package com.example.core.data.networking
 
 import android.util.Log
 import com.example.core.util.DataError
