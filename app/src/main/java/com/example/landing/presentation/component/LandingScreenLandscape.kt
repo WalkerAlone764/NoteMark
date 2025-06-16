@@ -23,6 +23,8 @@ import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 
 @Composable
 fun LandingScreenLandscape(
+    navigateToRegistration: () -> Unit,
+    navigateToLogin: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold { innerPadding ->
@@ -60,7 +62,11 @@ fun LandingScreenLandscape(
 
             ) {
 
-                LandingPageContent(innerPadding = innerPadding)
+                LandingPageContent(
+                    navigateToRegistration = navigateToRegistration,
+                    navigateToLogin = navigateToLogin,
+                    innerPadding = innerPadding
+                )
             }
 
         }
@@ -74,6 +80,9 @@ fun LandingScreenLandscape(
 @Composable
 private fun LandingScreenLandscapePreview() {
     NoteMarkTheme {
-        LandingScreenLandscape()
+        LandingScreenLandscape(
+            navigateToLogin = {},
+            navigateToRegistration = {}
+        )
     }
 }

@@ -1,4 +1,3 @@
-import androidx.room.gradle.RoomSimpleCopyTask
 import java.util.Properties
 
 plugins {

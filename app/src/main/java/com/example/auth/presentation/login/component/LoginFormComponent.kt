@@ -1,4 +1,4 @@
-package com.example.auth.presentation.registration.component
+package com.example.auth.presentation.login.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,16 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.example.auth.presentation.registration.RegistrationAction
-import com.example.auth.presentation.registration.RegistrationState
+import com.example.auth.presentation.login.LoginScreenAction
+import com.example.auth.presentation.login.LoginScreenState
+import com.example.auth.presentation.registration.component.TextButton
 import com.example.core.presentation.designsystem.component.FilledButton
 import com.example.core.presentation.designsystem.component.OutlinedTextInput
 
 @Composable
-fun RegistrationForm(
-    state: RegistrationState,
-    onAction: (RegistrationAction) -> Unit,
-    onClickAlreadyHaveAccount: () -> Unit,
+fun LoginFormComponent(
+    state: LoginScreenState,
+    onAction: (LoginScreenAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -29,29 +29,9 @@ fun RegistrationForm(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OutlinedTextInput(
-            value = state.username,
-            onValueChange = {
-                onAction(RegistrationAction.ChangeUsername(it))
-            },
-            placeholder = "John.Doe",
-            label = "Username",
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Next,
-                keyboardType = KeyboardType.Text
-            ),
-            supportingText = if (state.hasUsernameError) {
-                "Username must be at least 3 characters"
-            } else {
-                "Use between 3 and 20 characters for your username"
-            },
-            hasError = state.hasUsernameError,
-            modifier = Modifier
-                .fillMaxWidth()
-        )
-        OutlinedTextInput(
             value = state.email,
             onValueChange = {
-                onAction(RegistrationAction.ChangeEmail(it))
+                onAction(LoginScreenAction.OnChangeEmail(it))
             },
             placeholder = "john.doe@example.com",
             label = "Email",
@@ -72,7 +52,7 @@ fun RegistrationForm(
         OutlinedTextInput(
             value = state.password,
             onValueChange = {
-                onAction(RegistrationAction.ChangePassword(it))
+                onAction(LoginScreenAction.OnChangePassword(it))
             },
             placeholder = "Password",
             label = "Password",
@@ -91,32 +71,10 @@ fun RegistrationForm(
                 .fillMaxWidth()
         )
 
-        OutlinedTextInput(
-            value = state.confirmPassword,
-            onValueChange = {
-                onAction(RegistrationAction.ChangeConfirmPassword(it))
-            },
-            placeholder = "Password",
-            label = "Repeat Password",
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Password
-            ),
-            supportingText = if (state.hasConfirmPasswordError) {
-                "Passwords do not match"
-            } else {
-                null
-            },
-            isPassword = true,
-            hasError = state.hasConfirmPasswordError,
-            modifier = Modifier
-                .fillMaxWidth()
-        )
-
         FilledButton(
-            text = "Create account",
+            text = "Login",
             onClick = {
-                onAction(RegistrationAction.OnLoginClicked)
+                onAction(LoginScreenAction.OnClickLogin)
             },
             enabled = state.isLoginEnabled,
             modifier = Modifier
@@ -126,9 +84,12 @@ fun RegistrationForm(
         )
 
         TextButton(
-            text = "Already have an account?",
-            onClick = onClickAlreadyHaveAccount,
+            text = "Don’t have an account?",
+            onClick = {
+                onAction(LoginScreenAction.OnClickNotHaveAnAccount)
+            },
             modifier = Modifier
         )
+
     }
 }

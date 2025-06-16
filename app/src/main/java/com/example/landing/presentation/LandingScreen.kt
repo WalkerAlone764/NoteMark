@@ -10,20 +10,38 @@ import com.example.landing.presentation.component.LandscapeScreenTabletPortrait
 import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 
 @Composable
-fun LandingScreenRoot() {
-    LandingScreen()
+fun LandingScreenRoot(
+    navigateToRegistration: () -> Unit,
+    navigateToLogin: () -> Unit
+) {
+    LandingScreen(
+        navigateToRegistration = navigateToRegistration,
+        navigateToLogin = navigateToLogin
+    )
 }
 
 @Composable
-fun LandingScreen() {
+fun LandingScreen(
+    navigateToRegistration: () -> Unit,
+    navigateToLogin: () -> Unit
+) {
     val deviceType = getDeviceType()
     when (deviceType) {
         DeviceType.MOBILE_PORTRAIT -> {
-            LandingScreenMobilePortrait()
+            LandingScreenMobilePortrait(
+                navigateToRegistration = navigateToRegistration,
+                navigateToLogin = navigateToLogin
+            )
         }
 
-        DeviceType.TABLET_PORTRAIT -> LandscapeScreenTabletPortrait()
-        DeviceType.LANDSCAPE -> LandingScreenLandscape()
+        DeviceType.TABLET_PORTRAIT -> LandscapeScreenTabletPortrait(
+            navigateToRegistration = navigateToRegistration,
+            navigateToLogin = navigateToLogin
+        )
+        DeviceType.LANDSCAPE -> LandingScreenLandscape(
+            navigateToRegistration = navigateToRegistration,
+            navigateToLogin = navigateToLogin
+        )
     }
 }
 
@@ -32,6 +50,9 @@ fun LandingScreen() {
 @Composable
 private fun LandingScreenPreview() {
     NoteMarkTheme {
-        LandingScreen()
+        LandingScreen(
+            navigateToRegistration = {},
+            navigateToLogin = {}
+        )
     }
 }

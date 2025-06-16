@@ -17,7 +17,10 @@ import com.example.notemark.R
 import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 
 @Composable
-fun LandscapeScreenTabletPortrait() {
+fun LandscapeScreenTabletPortrait(
+    navigateToRegistration: () -> Unit,
+    navigateToLogin: () -> Unit
+) {
     Scaffold { innerPadding ->
         Box {
             Image(
@@ -30,6 +33,8 @@ fun LandscapeScreenTabletPortrait() {
         }
 
         LandingPageContent(
+            navigateToRegistration = navigateToRegistration,
+            navigateToLogin = navigateToLogin,
             modifier = Modifier
                 .height(IntrinsicSize.Min)
                 .fillMaxWidth(0.6f),
@@ -42,6 +47,9 @@ fun LandscapeScreenTabletPortrait() {
 @Composable
 private fun LandscapeScreenTabletPortraitPreview() {
     NoteMarkTheme {
-        LandscapeScreenTabletPortrait()
+        LandscapeScreenTabletPortrait(
+            navigateToLogin = {},
+            navigateToRegistration = {}
+        )
     }
 }

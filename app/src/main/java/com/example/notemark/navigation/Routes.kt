@@ -10,4 +10,10 @@ sealed interface Routes {
 
     @Serializable
     data object RegistrationScreen: Routes
+
+    @Serializable
+    data object LoginScreen: Routes
+
+    @Serializable
+    data object HomeScreen: Routes
 }

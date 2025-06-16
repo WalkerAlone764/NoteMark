@@ -27,6 +27,7 @@ import com.example.auth.presentation.registration.RegistrationState
 fun RegistrationTabletPortrait(
     state: RegistrationState,
     onAction: (RegistrationAction) -> Unit,
+    onClickAlreadyHaveAccount: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold { innerPadding ->
@@ -67,6 +68,7 @@ fun RegistrationTabletPortrait(
                     RegistrationForm(
                         state = state,
                         onAction = onAction,
+                        onClickAlreadyHaveAccount = onClickAlreadyHaveAccount,
                         modifier = Modifier
                             .fillMaxSize()
                     )

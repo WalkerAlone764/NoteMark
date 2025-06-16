@@ -17,7 +17,9 @@ import com.example.core.presentation.util.getDeviceType
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun RegistrationScreenRoot() {
+fun RegistrationScreenRoot(
+    onSuccessfullyRegistration: () -> Unit
+) {
     val viewModel = koinViewModel<RegistrationViewModel>()
     val state: RegistrationState = viewModel.state.collectAsStateWithLifecycle().value
 
@@ -31,27 +33,30 @@ fun RegistrationScreenRoot() {
 
             is RegistrationEvent.OnError -> {
                 Toast.makeText(context, event.uiText.asString(context), Toast.LENGTH_SHORT).show()
+                onSuccessfullyRegistration()
             }
         }
     }
 
     RegistrationScreen(
         state = state,
-        onAction = viewModel::onAction
+        onAction = viewModel::onAction,
+        onClickAlreadyHaveAccount = onSuccessfullyRegistration
     )
 }
 
 @Composable
 fun RegistrationScreen(
     state: RegistrationState,
-    onAction: (RegistrationAction) -> Unit
+    onAction: (RegistrationAction) -> Unit,
+    onClickAlreadyHaveAccount: () -> Unit,
 ) {
     val deviceType = getDeviceType()
 
     when (deviceType) {
-        MOBILE_PORTRAIT -> RegistrationMobilePortrait(state = state, onAction = onAction)
-        TABLET_PORTRAIT -> RegistrationTabletPortrait(state = state, onAction = onAction)
-        LANDSCAPE -> RegistrationLandscape(state = state, onAction = onAction)
+        MOBILE_PORTRAIT -> RegistrationMobilePortrait(state = state, onAction = onAction, onClickAlreadyHaveAccount = onClickAlreadyHaveAccount)
+        TABLET_PORTRAIT -> RegistrationTabletPortrait(state = state, onAction = onAction, onClickAlreadyHaveAccount = onClickAlreadyHaveAccount)
+        LANDSCAPE -> RegistrationLandscape(state = state, onAction = onAction, onClickAlreadyHaveAccount = onClickAlreadyHaveAccount)
     }
 
 }
@@ -62,7 +67,8 @@ private fun RegistrationScreenPreview() {
     NoteMarkTheme {
         RegistrationScreen(
             state = RegistrationState(),
-            onAction = {}
+            onAction = {},
+            onClickAlreadyHaveAccount = {}
         )
     }
 }

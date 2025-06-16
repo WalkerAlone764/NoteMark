@@ -29,6 +29,7 @@ import com.example.auth.presentation.registration.RegistrationState
 fun RegistrationLandscape(
     state: RegistrationState,
     onAction: (RegistrationAction) -> Unit,
+    onClickAlreadyHaveAccount: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold { innerPadding ->
@@ -69,6 +70,7 @@ fun RegistrationLandscape(
                     RegistrationForm(
                         state = state,
                         onAction = onAction,
+                        onClickAlreadyHaveAccount = onClickAlreadyHaveAccount,
                         modifier = Modifier
 
                     )

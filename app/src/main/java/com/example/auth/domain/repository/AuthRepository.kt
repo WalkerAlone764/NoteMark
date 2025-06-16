@@ -6,4 +6,5 @@ import com.example.core.util.EmptyDataResult
 interface AuthRepository {
 
     suspend fun registration(username: String, email: String, password: String): EmptyDataResult<DataError.Network>
+    suspend fun login(email: String, password: String): EmptyDataResult<DataError.Network>
 }

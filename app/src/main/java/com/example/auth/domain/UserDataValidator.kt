@@ -17,7 +17,7 @@ class UserDataValidator(
         val hasNumber = password.any { it.isDigit() }
         val hasSpecialCharacter = password.any { !it.isLetterOrDigit() }
 
-        return hasNumber && hasSpecialCharacter && hasMinLength
+        return (hasNumber || hasSpecialCharacter) && hasMinLength
 
     }
 

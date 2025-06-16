@@ -74,7 +74,6 @@ class HttpClientFactory(
                             val newAuth = AuthInfo(
                                 accessToken = response.data.accessToken,
                                 refreshToken = info?.refreshToken ?: "",
-                                userId = info?.userId ?: ""
                             )
                             BearerTokens(
                                 accessToken = newAuth.accessToken,

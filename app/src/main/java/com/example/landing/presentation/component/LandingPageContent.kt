@@ -24,6 +24,8 @@ import com.example.core.presentation.designsystem.component.OutlinedButton
 
 @Composable
 fun LandingPageContent(
+    navigateToRegistration: () -> Unit,
+    navigateToLogin: () -> Unit,
     modifier: Modifier = Modifier,
     innerPadding: PaddingValues = PaddingValues(0.dp)
 ) {
@@ -58,14 +60,14 @@ fun LandingPageContent(
             ) {
                 FilledButton(
                     text = "Get Started",
-                    onClick = {},
+                    onClick = navigateToRegistration,
                     modifier = Modifier
                         .fillMaxWidth()
 
                 )
                 OutlinedButton(
                     text = "Log In",
-                    onClick = {},
+                    onClick = navigateToLogin,
                     modifier = Modifier
                         .fillMaxWidth()
                 )

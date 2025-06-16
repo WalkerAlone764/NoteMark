@@ -5,6 +5,7 @@ import com.example.auth.data.repository.AuthRepositoryImpl
 import com.example.auth.domain.PatternValidator
 import com.example.auth.domain.UserDataValidator
 import com.example.auth.domain.repository.AuthRepository
+import com.example.auth.presentation.login.LoginScreenViewModel
 import com.example.auth.presentation.registration.RegistrationViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -13,7 +14,7 @@ import org.koin.dsl.module
 val authModule = module {
 
     single<AuthRepository> {
-        AuthRepositoryImpl(get())
+        AuthRepositoryImpl(get(), get())
     }
 
     single<PatternValidator> {
@@ -23,4 +24,5 @@ val authModule = module {
     singleOf(::UserDataValidator)
 
     viewModelOf(::RegistrationViewModel)
+    viewModelOf(::LoginScreenViewModel)
 }

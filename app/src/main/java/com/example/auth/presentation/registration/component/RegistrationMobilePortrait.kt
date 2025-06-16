@@ -25,6 +25,7 @@ import com.example.auth.presentation.registration.RegistrationState
 fun RegistrationMobilePortrait(
     state: RegistrationState,
     onAction: (RegistrationAction) -> Unit,
+    onClickAlreadyHaveAccount: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold { innerPadding ->
@@ -56,6 +57,7 @@ fun RegistrationMobilePortrait(
                 RegistrationForm(
                     state = state,
                     onAction = onAction,
+                    onClickAlreadyHaveAccount = onClickAlreadyHaveAccount,
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())

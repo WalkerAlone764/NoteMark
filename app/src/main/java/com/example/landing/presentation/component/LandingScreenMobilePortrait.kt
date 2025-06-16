@@ -13,7 +13,10 @@ import androidx.compose.ui.res.painterResource
 import com.example.notemark.R
 
 @Composable
-internal fun LandingScreenMobilePortrait(modifier: Modifier = Modifier) {
+internal fun LandingScreenMobilePortrait(
+    navigateToRegistration: () -> Unit,
+    navigateToLogin: () -> Unit,
+) {
     Scaffold { innerPadding ->
         Box {
             Image(
@@ -26,6 +29,8 @@ internal fun LandingScreenMobilePortrait(modifier: Modifier = Modifier) {
         }
 
         LandingPageContent(
+            navigateToLogin = navigateToLogin,
+            navigateToRegistration = navigateToRegistration,
             modifier = Modifier
                 .height(IntrinsicSize.Min),
             innerPadding = innerPadding
