@@ -10,11 +10,12 @@ import com.example.landing.presentation.LandingScreenRoot
 
 @Composable
 fun SetupNavigation(
-    navController: NavHostController
+    navController: NavHostController,
+    isLoggedIn: Boolean = false
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.LandingScreen
+        startDestination = if (isLoggedIn) Routes.HomeScreen else Routes.LandingScreen
     ) {
         composable<Routes.LandingScreen> {
             LandingScreenRoot(

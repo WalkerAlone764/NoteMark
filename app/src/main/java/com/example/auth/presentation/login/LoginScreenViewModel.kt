@@ -1,17 +1,16 @@
 package com.example.auth.presentation.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.auth.domain.UserDataValidator
 import com.example.auth.domain.repository.AuthRepository
-import com.example.auth.presentation.login.LoginEvent
 import com.example.core.presentation.util.asUiText
 import com.example.core.util.Result
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -19,15 +18,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginScreenViewModel(
-    private val authRepository: AuthRepository,
-    private val userDataValidator: UserDataValidator
+    private val authRepository: AuthRepository, private val userDataValidator: UserDataValidator
 ) : ViewModel() {
 
     private var hasLoadedInitialData = false
     private val isLoginClicked = MutableStateFlow(false)
 
     private val _state = MutableStateFlow(LoginScreenState())
-    val state = combine(_state,isLoginClicked) { state, isLoginClicked ->
+    val state = combine(_state, isLoginClicked) { state, isLoginClicked ->
 
         val updatedState = state.copy(
             isLoginEnabled = state.email.isNotEmpty() && state.password.isNotEmpty()
@@ -42,8 +40,7 @@ class LoginScreenViewModel(
             )
         }
         updatedState
-    }
-        .onStart {
+    }.onStart {
             if (!hasLoadedInitialData) {
                 /** Load initial data here **/
                 hasLoadedInitialData = true
@@ -81,8 +78,7 @@ class LoginScreenViewModel(
             val hasValidPassword = userDataValidator.isValidPassword(_state.value.password)
             _state.update {
                 it.copy(
-                    hasEmailError = !hasValidEmail,
-                    hasPasswordError = !hasValidPassword
+                    hasEmailError = !hasValidEmail, hasPasswordError = !hasValidPassword
                 )
             }
 
@@ -90,15 +86,17 @@ class LoginScreenViewModel(
                 return@launch
             }
 
-            val result = authRepository.login(
-                email = _state.value.email,
-                password = _state.value.password
-            )
 
-            when(result) {
+            Log.d("authenication", "calling")
+            val result = authRepository.login(
+                email = _state.value.email, password = _state.value.password
+            )
+            Log.d("authenication result", result.toString())
+            when (result) {
                 is Result.Error -> {
                     _event.send(LoginEvent.OnError(result.error.asUiText()))
                 }
+
                 is Result.Success -> {
                     _event.send(LoginEvent.OnSuccess)
                 }

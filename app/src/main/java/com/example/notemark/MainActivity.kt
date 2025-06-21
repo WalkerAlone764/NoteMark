@@ -2,7 +2,6 @@ package com.example.notemark
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -11,20 +10,24 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 import com.example.notemark.navigation.SetupNavigation
-import timber.log.Timber
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: MainViewModel by inject<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+
+        installSplashScreen().apply {
+            setKeepOnScreenCondition {
+                viewModel.state.isCheckingAuth == true
+            }
+        }
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(
-                scrim = Color.BLACK,
-                darkScrim = Color.BLACK
-            ),
-            navigationBarStyle = SystemBarStyle.light(
-                scrim = Color.BLACK,
-                darkScrim = Color.BLACK
+                scrim = Color.BLACK, darkScrim = Color.BLACK
+            ), navigationBarStyle = SystemBarStyle.light(
+                scrim = Color.BLACK, darkScrim = Color.BLACK
             )
         )
 
@@ -32,7 +35,7 @@ class MainActivity : ComponentActivity() {
             NoteMarkTheme {
                 val navController = rememberNavController()
                 SetupNavigation(
-                    navController = navController
+                    navController = navController, isLoggedIn = viewModel.state.isLoggedIn
                 )
             }
         }

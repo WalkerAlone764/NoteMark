@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.auth.domain.UserDataValidator
 import com.example.auth.domain.repository.AuthRepository
+import com.example.core.domain.SessionStorage
 import com.example.core.presentation.util.asUiText
 import com.example.core.util.Result
 import kotlinx.coroutines.channels.Channel
@@ -18,8 +19,15 @@ import kotlinx.coroutines.launch
 
 class RegistrationViewModel(
     private val authRepository: AuthRepository,
+    private val sessionStorage: SessionStorage,
     private val userDataValidator: UserDataValidator
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            Log.d("session", sessionStorage.get().toString())
+        }
+    }
 
 
     private val isLoginClicked = MutableStateFlow(false)

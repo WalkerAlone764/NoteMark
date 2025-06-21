@@ -48,7 +48,7 @@ class HttpClientFactory(
             defaultRequest {
                 contentType(ContentType.Application.Json)
                 header("X-User-Email", BuildConfig.EMAIL)
-                header("Debug", true)
+//                header("Debug", true)
             }
 
             install(Auth) {
