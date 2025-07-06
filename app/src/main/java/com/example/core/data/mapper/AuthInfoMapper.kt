@@ -5,6 +5,7 @@ import com.example.core.domain.model.AuthInfo
 
 fun AuthInfo.toAuthInfoSerializable(): AuthInfoSerializable {
     return AuthInfoSerializable(
+        username = username,
         accessToken = accessToken,
         refreshToken = refreshToken,
     )
@@ -12,6 +13,7 @@ fun AuthInfo.toAuthInfoSerializable(): AuthInfoSerializable {
 
 fun AuthInfoSerializable.toAuthInfo(): AuthInfo {
     return AuthInfo(
+        username = username,
         accessToken = accessToken,
         refreshToken = refreshToken,
     )

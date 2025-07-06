@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.auth.di.authModule
 import com.example.core.di.appModule
 import com.example.notemark.di.applicationModule
+import com.example.notes.di.noteModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -17,7 +18,7 @@ class NoteMarkApplication : Application() {
 
             androidLogger()
             androidContext(this@NoteMarkApplication)
-            modules(appModule, authModule,applicationModule)
+            modules(appModule, authModule,applicationModule, noteModule)
         }
     }
 }

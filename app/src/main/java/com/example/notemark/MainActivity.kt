@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 import com.example.notemark.navigation.SetupNavigation
 import org.koin.android.ext.android.inject
+import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by inject<MainViewModel>()
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
 
         installSplashScreen().apply {
             setKeepOnScreenCondition {
-                viewModel.state.isCheckingAuth == true
+                viewModel.state.isCheckingAuth
             }
         }
         enableEdgeToEdge(
@@ -32,11 +33,13 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            NoteMarkTheme {
-                val navController = rememberNavController()
-                SetupNavigation(
-                    navController = navController, isLoggedIn = viewModel.state.isLoggedIn
-                )
+            KoinContext {
+                NoteMarkTheme {
+                    val navController = rememberNavController()
+                    SetupNavigation(
+                        navController = navController, isLoggedIn = viewModel.state.isLoggedIn
+                    )
+                }
             }
         }
     }

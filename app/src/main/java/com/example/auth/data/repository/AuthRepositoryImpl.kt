@@ -50,6 +50,7 @@ class AuthRepositoryImpl(
         if (result is Result.Success) {
             sessionStorage.set(
                 AuthInfo(
+                    username = result.data.username,
                     accessToken = result.data.accessToken,
                     refreshToken = result.data.refreshToken,
 

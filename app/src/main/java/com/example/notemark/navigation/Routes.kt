@@ -16,4 +16,10 @@ sealed interface Routes {
 
     @Serializable
     data object HomeScreen: Routes
+
+    @Serializable
+    data object NoteListScreen: Routes
+
+    @Serializable
+    data class AddNoteScreen(val noteId: String): Routes
 }

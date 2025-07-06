@@ -1,0 +1,28 @@
+GET https://notemark.pl-coding.com/api/notes
+Access-Control-Allow-Headers: X-User-Email - jatinsinghal404@gmail.com
+User-Agent: IntelliJ HTTP Client/Android Studio Meerkat Feature Drop | 2024.3.2 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-06-24T212504.401.json
+
+###
+
+GET https://notemark.pl-coding.com/api/notes
+User-Agent: IntelliJ HTTP Client/Android Studio Meerkat Feature Drop | 2024.3.2 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-06-24T212019.401.json
+
+###
+
+GET https://notemark.pl-coding.com/api/notes
+User-Agent: IntelliJ HTTP Client/Android Studio Meerkat Feature Drop | 2024.3.2 Patch 1
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-06-24T204409.401.json
+
+###
+

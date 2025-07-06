@@ -1,6 +1,9 @@
 package com.example.notes.presentation.list
 
+import com.example.notes.domain.model.Note
+
 data class NoteListState(
-    val paramOne: String = "default",
-    val paramTwo: List<String> = emptyList(),
+    val userTag: String = "",
+    val notes: List<Note> = emptyList(),
+    val isDeleteDialogShown: Boolean = false
 )
