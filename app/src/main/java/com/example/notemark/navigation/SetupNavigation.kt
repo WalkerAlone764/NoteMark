@@ -10,6 +10,7 @@ import com.example.auth.presentation.registration.RegistrationScreenRoot
 import com.example.landing.presentation.LandingScreenRoot
 import com.example.notes.presentation.add.AddNoteRoot
 import com.example.notes.presentation.list.NoteListRoot
+import com.example.setting.presentation.SettingRoot
 
 @Composable
 fun SetupNavigation(
@@ -67,10 +68,11 @@ fun SetupNavigation(
         }
 
         composable<Routes.NoteListScreen> {
-            NoteListRoot(
-                onNavigateToAddNote = {
-                    navController.navigate(Routes.AddNoteScreen(it))
-                })
+            NoteListRoot(onNavigateToAddNote = {
+                navController.navigate(Routes.AddNoteScreen(it))
+            }, navigateToSetting = {
+                navController.navigate(Routes.SettingScreen)
+            })
         }
 
         composable<Routes.AddNoteScreen> {
@@ -78,6 +80,13 @@ fun SetupNavigation(
 
             AddNoteRoot(
                 onBack = {
+                    navController.navigateUp()
+                })
+        }
+
+        composable<Routes.SettingScreen> {
+            SettingRoot(
+                navigateBack = {
                     navController.navigateUp()
                 })
         }

@@ -3,13 +3,15 @@
 package com.example.notes.presentation.list.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -18,38 +20,47 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.presentation.designsystem.theme.NoteMarkTheme
+import com.example.notemark.R
 
 @Composable
 fun NoteListTopBar(
-    tag: String,
-    modifier: Modifier = Modifier
+    tag: String, onClickSettingIcon: () -> Unit, modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        modifier = modifier,
-        title = {
-            Text(
-                text = "NoteMark",
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontSize = 20.sp
-                ),
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.W700,
-            )
-        },
-        actions = {
+        modifier = modifier, title = {
+        Text(
+            text = "NoteMark",
+            style = MaterialTheme.typography.titleMedium.copy(
+                fontSize = 20.sp
+            ),
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.W700,
+        )
+    }, actions = {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            IconButton(
+                onClick = onClickSettingIcon
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.settings), contentDescription = null
+                )
+            }
             Tag(
                 tag = tag
             )
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        }
+    }, colors = TopAppBarDefaults.topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.background,
+        navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+    )
     )
 }
 
@@ -65,8 +76,7 @@ private fun Tag(
             .background(MaterialTheme.colorScheme.primary)
             .padding(
                 12.dp
-            ),
-        contentAlignment = Alignment.Center
+            ), contentAlignment = Alignment.Center
     ) {
         Text(
             text = tag,
@@ -82,7 +92,6 @@ private fun Tag(
 private fun Preview() {
     NoteMarkTheme {
         NoteListTopBar(
-            tag = "JS"
-        )
+            tag = "JS", onClickSettingIcon = {})
     }
 }

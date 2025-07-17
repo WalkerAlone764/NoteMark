@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -26,7 +24,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -50,6 +47,7 @@ import java.time.ZonedDateTime
 @Composable
 fun NoteListRoot(
     onNavigateToAddNote: (noteId: String) -> Unit,
+    navigateToSetting: () -> Unit,
     viewModel: NoteListViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -62,7 +60,7 @@ fun NoteListRoot(
             }
 
             is NoteListEvent.OnError -> {
-                Toast.makeText(context,event.uiText.asString(context), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, event.uiText.asString(context), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -71,11 +69,14 @@ fun NoteListRoot(
         state = state, onAction = { action ->
             if (action is NoteListAction.OnClickNote) {
                 onNavigateToAddNote(action.note.id)
-            } else {
+            }
+            if (action is NoteListAction.OnClickSettingIcon) {
+                navigateToSetting()
+            }
+            else {
                 viewModel.onAction(action)
             }
-        }
-    )
+        })
 
     DeleteConfirmation(isVisible = state.isDeleteDialogShown, onDismiss = {
         viewModel.onAction(NoteListAction.OnDismissDeletingNote)
@@ -96,7 +97,10 @@ fun NoteListScreen(
             })
     }, topBar = {
         NoteListTopBar(
-            tag = state.userTag
+            tag = state.userTag,
+            onClickSettingIcon = {
+                onAction(NoteListAction.OnClickSettingIcon)
+            }
         )
     }) { innerPadding ->
         Column(
@@ -153,8 +157,7 @@ private fun DeleteConfirmation(
                     .fillMaxWidth()
                     .padding(
                         top = 12.dp
-                    ),
-                horizontalArrangement = Arrangement.End
+                    ), horizontalArrangement = Arrangement.End
             ) {
                 TextButton(
                     onClick = onConfirm
@@ -166,7 +169,7 @@ private fun DeleteConfirmation(
                         textAlign = TextAlign.Center,
 
 
-                    )
+                        )
                 }
                 TextButton(
                     onClick = onDismiss

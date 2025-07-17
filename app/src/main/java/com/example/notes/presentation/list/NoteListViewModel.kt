@@ -65,7 +65,8 @@ class NoteListViewModel(
             NoteListAction.OnConfirmDeletingNote -> onConfirmDeletingNote()
             NoteListAction.OnDismissDeletingNote -> onDismissDeletingNote()
             NoteListAction.OnClickAddNote -> onClickAddNote()
-            is NoteListAction.OnClickNote -> {  }
+            is NoteListAction.OnClickNote -> { }
+            NoteListAction.OnClickSettingIcon -> { }
         }
     }
 
