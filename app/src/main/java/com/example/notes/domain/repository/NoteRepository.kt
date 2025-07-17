@@ -11,7 +11,11 @@ interface NoteRepository {
     suspend fun fetchNotes(): EmptyDataResult<DataError>
     fun getNotes(): Flow<List<Note>>
 
+    suspend fun getNoteById(id: String): Note?
+
     suspend fun createNote(note: Note): Result<String,DataError>
 
     suspend fun deleteNote(note: Note): EmptyDataResult<DataError>
+
+    suspend fun updateNote(note: Note): EmptyDataResult<DataError>
 }

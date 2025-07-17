@@ -48,13 +48,14 @@ class HttpClientFactory(
             defaultRequest {
                 contentType(ContentType.Application.Json)
                 header("X-User-Email", BuildConfig.EMAIL)
-//                header("Debug", true)
             }
 
             install(Auth) {
                 bearer {
                     loadTokens {
                         val info = sessionStorage.get()
+
+                        Timber.d("loadToken: ${info.toString()}", )
                         BearerTokens(
                             accessToken = info?.accessToken ?: "",
                             refreshToken = info?.refreshToken ?: ""
@@ -63,6 +64,7 @@ class HttpClientFactory(
 
                     refreshTokens {
                         val info = sessionStorage.get()
+                        Timber.d("refreshTokens: ${info.toString()}")
                         val response = client.post<RefreshTokenRequest, RefreshTokenResponse>(
                             route = "/api/auth/refresh",
                             body = RefreshTokenRequest(

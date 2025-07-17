@@ -43,6 +43,10 @@ class OfflineNoteRepository(
         return localNoteDataSource.getNotes()
     }
 
+    override suspend fun getNoteById(id: String): Note? {
+        return localNoteDataSource.getNoteById(id)
+    }
+
     override suspend fun createNote(note: Note): Result<String,DataError> {
         val localNoteId = localNoteDataSource.upsertNote(note)
         Log.d("NoteRepository local", localNoteId.toString())
@@ -86,5 +90,24 @@ class OfflineNoteRepository(
         }
 
         return Result.Success(Unit)
+    }
+
+    override suspend fun updateNote(note: Note): EmptyDataResult<DataError> {
+        val localResult = localNoteDataSource.upsertNote(note)
+        return when(localResult) {
+            is Result.Error -> {
+                localResult.asEmptyDataResult()
+            }
+            is Result.Success -> {
+                val result = remoteNoteDataSource.updateNote(note)
+//                when(result) {
+//                    is Result.Error -> {}
+//                    is Result.Success -> {}
+//                }
+
+                 Result.Success(Unit)
+            }
+        }
+
     }
 }

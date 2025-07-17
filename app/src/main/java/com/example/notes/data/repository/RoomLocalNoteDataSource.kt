@@ -22,8 +22,8 @@ class RoomLocalNoteDataSource(
             .map { list -> list.fastMap { noteEntity -> noteEntity.toNote() } }
     }
 
-    override suspend fun getNoteById(id: String): Note {
-        TODO("Not yet implemented")
+    override suspend fun getNoteById(id: String): Note? {
+        return noteDao.getNoteById(id)?.toNote()
     }
 
     override suspend fun upsertNote(note: Note): Result<String, DataError.Local> {

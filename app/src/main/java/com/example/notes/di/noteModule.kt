@@ -8,6 +8,7 @@ import com.example.notes.data.repository.RoomLocalNoteDataSource
 import com.example.notes.domain.repository.LocalNoteDataSource
 import com.example.notes.domain.repository.NoteRepository
 import com.example.notes.domain.repository.RemoteNoteDataSource
+import com.example.notes.presentation.add.AddNoteViewModel
 import com.example.notes.presentation.list.NoteListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModelOf
@@ -15,6 +16,7 @@ import org.koin.dsl.module
 
 val noteModule = module {
     viewModelOf(::NoteListViewModel)
+    viewModelOf(::AddNoteViewModel)
 
     single<NoteDatabase> {
         Room.databaseBuilder(

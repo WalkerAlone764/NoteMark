@@ -23,13 +23,15 @@ import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 
 @Composable
 fun AddNoteTopBar(
+    onClickBack: () -> Unit,
+    onClickSaveNote: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
         modifier = modifier,
         navigationIcon = {
             IconButton(
-                onClick = {}
+                onClick = onClickBack
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
@@ -42,7 +44,7 @@ fun AddNoteTopBar(
         title = {},
         actions = {
             TextButton(
-                onClick = {}
+                onClick = onClickSaveNote
             ) {
                 Text(
                     text = "SAVE NOTE",
@@ -64,6 +66,9 @@ fun AddNoteTopBar(
 @Composable
 private fun NoteListTopBarPreview() {
     NoteMarkTheme {
-        AddNoteTopBar()
+        AddNoteTopBar(
+            onClickBack = {},
+            onClickSaveNote = {}
+        )
     }
 }

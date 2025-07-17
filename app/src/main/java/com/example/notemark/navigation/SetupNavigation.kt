@@ -1,10 +1,6 @@
 package com.example.notemark.navigation
 
-import android.util.Log
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,30 +13,26 @@ import com.example.notes.presentation.list.NoteListRoot
 
 @Composable
 fun SetupNavigation(
-    navController: NavHostController,
-    isLoggedIn: Boolean = false
+    navController: NavHostController, isLoggedIn: Boolean = false
 ) {
     NavHost(
         navController = navController,
         startDestination = if (isLoggedIn) Routes.NoteListScreen else Routes.LandingScreen
     ) {
         composable<Routes.LandingScreen> {
-            LandingScreenRoot(
-                navigateToRegistration = {
-                    navController.navigate(Routes.RegistrationScreen) {
-                        popUpTo(Routes.LandingScreen) {
-                            inclusive = true
-                        }
-                    }
-                },
-                navigateToLogin = {
-                    navController.navigate(Routes.LoginScreen) {
-                        popUpTo(Routes.LandingScreen) {
-                            inclusive = true
-                        }
+            LandingScreenRoot(navigateToRegistration = {
+                navController.navigate(Routes.RegistrationScreen) {
+                    popUpTo(Routes.LandingScreen) {
+                        inclusive = true
                     }
                 }
-            )
+            }, navigateToLogin = {
+                navController.navigate(Routes.LoginScreen) {
+                    popUpTo(Routes.LandingScreen) {
+                        inclusive = true
+                    }
+                }
+            })
         }
 
         composable<Routes.RegistrationScreen> {
@@ -51,27 +43,23 @@ fun SetupNavigation(
                             inclusive = true
                         }
                     }
-                }
-            )
+                })
         }
 
         composable<Routes.LoginScreen> {
-            LoginScreenRoot(
-                onSuccessfullyLogin = {
-                    navController.navigate(Routes.NoteListScreen) {
-                        popUpTo(Routes.LoginScreen) {
-                            inclusive = true
-                        }
-                    }
-                },
-                onClickDoNotHaveAccount = {
-                    navController.navigate(Routes.RegistrationScreen) {
-                        popUpTo(Routes.LoginScreen) {
-                            inclusive = true
-                        }
+            LoginScreenRoot(onSuccessfullyLogin = {
+                navController.navigate(Routes.NoteListScreen) {
+                    popUpTo(Routes.LoginScreen) {
+                        inclusive = true
                     }
                 }
-            )
+            }, onClickDoNotHaveAccount = {
+                navController.navigate(Routes.RegistrationScreen) {
+                    popUpTo(Routes.LoginScreen) {
+                        inclusive = true
+                    }
+                }
+            })
         }
 
         composable<Routes.HomeScreen> {
@@ -81,16 +69,17 @@ fun SetupNavigation(
         composable<Routes.NoteListScreen> {
             NoteListRoot(
                 onNavigateToAddNote = {
-                    Log.d("TAG", "Navigate To: $it")
                     navController.navigate(Routes.AddNoteScreen(it))
-                }
-            )
+                })
         }
 
         composable<Routes.AddNoteScreen> {
-            val args = it.savedStateHandle.toRoute<Routes.AddNoteScreen>()
+            it.savedStateHandle.toRoute<Routes.AddNoteScreen>()
 
-            AddNoteRoot()
+            AddNoteRoot(
+                onBack = {
+                    navController.navigateUp()
+                })
         }
 
     }

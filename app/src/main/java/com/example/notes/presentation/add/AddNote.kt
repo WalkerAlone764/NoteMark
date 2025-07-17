@@ -1,43 +1,64 @@
 package com.example.notes.presentation.add
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.core.presentation.designsystem.theme.NoteMarkTheme
+import com.example.core.presentation.util.ObserveAsEvents
 import com.example.core.presentation.util.negativePadding
 import com.example.notes.presentation.add.component.AddNoteTopBar
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AddNoteRoot(
-    viewModel: AddNoteViewModel = viewModel()
+    onBack: () -> Unit, viewModel: AddNoteViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val context = LocalContext.current
+    ObserveAsEvents(viewModel.event) { event ->
+        when (event) {
+            is AddNoteEvent.OnError -> {
+                Toast.makeText(context, event.error.asString(context), Toast.LENGTH_SHORT).show()
+            }
+
+            AddNoteEvent.SuccessfullyUpdated -> {
+                onBack()
+            }
+        }
+    }
+
     AddNoteScreen(
-        state = state,
-        onAction = viewModel::onAction
+        state = state, onClickBack = onBack, onAction = viewModel::onAction
     )
 }
 
 @Composable
 fun AddNoteScreen(
     state: AddNoteState,
+    onClickBack: () -> Unit,
     onAction: (AddNoteAction) -> Unit,
 ) {
     Scaffold(
         topBar = {
-            AddNoteTopBar()
+            AddNoteTopBar(
+                onClickBack = onClickBack, onClickSaveNote = {
+                    onAction(AddNoteAction.OnClickSaveNote)
+                })
         }, modifier = Modifier
 
     ) { innerPadding ->
@@ -50,7 +71,10 @@ fun AddNoteScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            TitleField()
+            TitleField(
+                title = state.title, onChangeTitle = {
+                    onAction(AddNoteAction.OnChangeTitle(it))
+                })
             HorizontalDivider(
                 modifier = Modifier
                     .padding(
@@ -58,7 +82,10 @@ fun AddNoteScreen(
                     )
                     .negativePadding(horizontal = 20.dp)
             )
-            DescriptionField()
+            DescriptionField(
+                content = state.content, onChangeContent = {
+                    onAction(AddNoteAction.OnChangeContent(it))
+                })
         }
 
     }
@@ -66,25 +93,41 @@ fun AddNoteScreen(
 
 
 @Composable
-private fun DescriptionField() {
+private fun DescriptionField(
+    content: String, onChangeContent: (String) -> Unit
+) {
     BasicTextField(
-        value = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ",
-        onValueChange = {},
+        value = content,
+        onValueChange = onChangeContent,
         textStyle = MaterialTheme.typography.bodyLarge.copy(
             color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        ),
+        decorationBox = { innerTextField ->
+            if (content.isEmpty()) {
+                Text(
+                    text = "Tap to enter note content",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            innerTextField()
+        },
+        modifier = Modifier.fillMaxSize()
     )
 }
 
 @Composable
-private fun TitleField() {
+private fun TitleField(
+    title: String, onChangeTitle: (String) -> Unit
+) {
     BasicTextField(
-        value = "Note Title",
-        onValueChange = {},
+        value = title,
+        onValueChange = onChangeTitle,
         textStyle = MaterialTheme.typography.titleMedium.copy(
             color = MaterialTheme.colorScheme.onSurface
         ),
-        maxLines = 1
+        maxLines = 1,
+        modifier = Modifier.fillMaxWidth()
     )
 }
 
@@ -92,9 +135,6 @@ private fun TitleField() {
 @Composable
 private fun Preview() {
     NoteMarkTheme {
-        AddNoteScreen(
-            state = AddNoteState(),
-            onAction = {}
-        )
+        AddNoteScreen(state = AddNoteState(), onClickBack = {}, onAction = {})
     }
 }

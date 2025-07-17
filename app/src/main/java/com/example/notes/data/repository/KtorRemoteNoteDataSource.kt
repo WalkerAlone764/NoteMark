@@ -5,6 +5,7 @@ import androidx.compose.ui.util.fastMap
 import com.example.core.data.networking.delete
 import com.example.core.data.networking.get
 import com.example.core.data.networking.post
+import com.example.core.data.networking.put
 import com.example.core.util.DataError
 import com.example.core.util.EmptyDataResult
 import com.example.core.util.Result
@@ -47,7 +48,14 @@ class KtorRemoteNoteDataSource(
     }
 
     override suspend fun updateNote(note: Note): Result<Note, DataError> {
-        TODO("Not yet implemented")
+        val result = httpClient.put<NoteDto, NoteDto>(
+            route = "/api/notes",
+            body = note.toNoteDto()
+            ).map {
+            it.toNote()
+        }
+        Log.d("update note ktor", result.toString())
+        return result
     }
 
     override suspend fun deleteNote(note: Note): EmptyDataResult<DataError> {

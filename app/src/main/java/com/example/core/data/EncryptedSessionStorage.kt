@@ -9,6 +9,7 @@ import com.example.core.domain.model.AuthInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import androidx.core.content.edit
 
 class EncryptedSessionStorage(
     private val sharedPreferences: SharedPreferences,
@@ -27,13 +28,13 @@ class EncryptedSessionStorage(
     override suspend fun set(authInfo: AuthInfo?) {
         withContext(Dispatchers.IO) {
             if (authInfo == null) {
-                sharedPreferences.edit().remove(KEY_AUTH_INFO).commit()
+                sharedPreferences.edit(commit = true) { remove(KEY_AUTH_INFO) }
                 return@withContext
             } else {
                 val json = Json.encodeToString(authInfo.toAuthInfoSerializable())
-                sharedPreferences.edit()
-                    .putString(KEY_AUTH_INFO, json)
-                    .commit()
+                sharedPreferences.edit(commit = true) {
+                    putString(KEY_AUTH_INFO, json)
+                }
 
             }
         }

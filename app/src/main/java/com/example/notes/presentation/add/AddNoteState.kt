@@ -1,6 +1,8 @@
 package com.example.notes.presentation.add
 
+import com.example.notes.domain.model.Note
+
 data class AddNoteState(
-    val paramOne: String = "default",
-    val paramTwo: List<String> = emptyList(),
+    val title: String = "",
+    val content: String = ""
 )
