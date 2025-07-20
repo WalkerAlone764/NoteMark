@@ -2,12 +2,16 @@ package com.example.setting.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.setting.domain.repository.SettingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class SettingViewModel : ViewModel() {
+class SettingViewModel(
+    private val settingRepository: SettingRepository
+) : ViewModel() {
 
     private var hasLoadedInitialData = false
 
@@ -25,7 +29,16 @@ class SettingViewModel : ViewModel() {
 
     fun onAction(action: SettingAction) {
         when (action) {
-            else -> TODO("Handle actions")
+            SettingAction.OnClickBack -> {
+                //No need to handle here
+            }
+            SettingAction.OnClickLogout -> logout()
+        }
+    }
+
+    private fun logout() {
+        viewModelScope.launch {
+            settingRepository.logout()
         }
     }
 

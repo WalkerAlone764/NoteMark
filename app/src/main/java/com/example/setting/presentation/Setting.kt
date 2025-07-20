@@ -2,12 +2,15 @@
 
 package com.example.setting.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,15 +34,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.core.presentation.designsystem.theme.NoteMarkTheme
 import com.example.notemark.R
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SettingRoot(
-    navigateBack: () -> Unit, viewModel: SettingViewModel = viewModel()
+    navigateBack: () -> Unit, viewModel: SettingViewModel = koinViewModel()
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
     SettingScreen(
-        state = state, onAction = { action ->
+         onAction = { action ->
             when (action) {
                 SettingAction.OnClickBack -> {
                     navigateBack()
@@ -54,7 +57,6 @@ fun SettingRoot(
 
 @Composable
 fun SettingScreen(
-    state: SettingState,
     onAction: (SettingAction) -> Unit,
 ) {
     Scaffold(
@@ -65,6 +67,7 @@ fun SettingScreen(
                 })
         }) { innerPadding ->
         SettingContent(
+            onAction = onAction,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -103,16 +106,32 @@ fun SettingTopBar(
 }
 
 @Composable
-private fun SettingContent(modifier: Modifier = Modifier) {
+private fun SettingContent(
+    onAction: (SettingAction) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
     ) {
         Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp)
+//                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .clickable(
+                    onClick = {
+                        onAction(SettingAction.OnClickLogout)
+                    }
+                ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             IconButton(
-                onClick = {}) {
+                onClick = {
+                    onAction(SettingAction.OnClickLogout)
+                }
+            ) {
                 Icon(
                     painter = painterResource(R.drawable.logout),
                     contentDescription = null,
@@ -134,7 +153,6 @@ private fun SettingContent(modifier: Modifier = Modifier) {
 @Composable
 private fun Preview() {
     NoteMarkTheme {
-        SettingScreen(
-            state = SettingState(), onAction = {})
+        SettingScreen( onAction = {})
     }
 }
